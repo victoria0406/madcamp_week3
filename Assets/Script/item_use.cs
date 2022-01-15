@@ -15,6 +15,8 @@ public class item_use : MonoBehaviour
     public GameObject glasses_panel;
     public GameObject glass_ob;
 
+    public Image blur;
+
 
 
     // Start is called before the first frame update
@@ -53,6 +55,8 @@ public class item_use : MonoBehaviour
                     script.text = "안경을 사용합니다";
                     StartCoroutine(delete_ment());
                     using_glasses();
+                    blur.gameObject.SetActive(false);
+
                     //item_panel.transform.Find("glasses").gameObject.SetActive(false);
                     
                 }
@@ -65,6 +69,7 @@ public class item_use : MonoBehaviour
                 script.gameObject.SetActive(true);
                 script.text = "안경을 벗었습니다";
                 StartCoroutine(delete_ment());
+                blur.gameObject.SetActive(true);
                 //item_panel.transform.Find("glasses").gameObject.SetActive(false);
 
             }
