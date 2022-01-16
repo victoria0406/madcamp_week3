@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class get_item : MonoBehaviour
@@ -29,38 +30,45 @@ public class get_item : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit))
+            if (EventSystem.current.IsPointerOverGameObject()) //이거 카메라가 달라서 안먹으니까 고쳐
             {
-                string objectName = hit.collider.gameObject.name;
-                Debug.Log(objectName);
-                //hit.collider.gameObject.SetActive(false);
-                Destroy(hit.collider.gameObject);
+                //클릭 처리
+                return;
+            }
+            else { 
+                Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+                if (Physics.Raycast(ray, out hit))
+                {
+                    string objectName = hit.collider.gameObject.name;
+                    Debug.Log(objectName);
+                    //hit.collider.gameObject.SetActive(false);
+                    Destroy(hit.collider.gameObject);
 
-                //각각 아이템별 멘트
-                if (objectName == "Glasses")
-                {
-                    main_ment = "안경을 획득했습니다";
-                    sub_ment = "안경을 쓰면 다른 세상을 볼 수 있습니다";
-                    content.transform.Find("B_glasses").gameObject.SetActive(true);
+                    //각각 아이템별 멘트
+                    if (objectName == "Glasses")
+                    {
+                        main_ment = "안경을 획득했습니다";
+                        sub_ment = "드디어 안경을 찾았다. 이제야 잘 보이는군";
+                        content.transform.Find("B_glasses").gameObject.SetActive(true);
+                    }
+                    else if (objectName == "Box")
+                    {
+                        main_ment = "상자를 획득했습니다";
+                        sub_ment = "상자를 흔들어보자";
+                        content.transform.Find("B_mag").gameObject.SetActive(true);
+                    }
+                    else if (objectName == "jang's_book")
+                    {
+                        main_ment = "장병규님의 저서를 발견했다.";
+                        sub_ment = "여기 조금 긴 머리카락이 보이는데? 누구일까?";
+                        content.transform.Find("B_hid").gameObject.SetActive(true);
+                    }
+                    canvas.transform.Find("main_ment").gameObject.SetActive(true);
+                    canvas.transform.Find("Script").gameObject.SetActive(true);
+                    canvas.transform.Find("main_ment").GetComponent<Text>().text = main_ment;
+                    canvas.transform.Find("Script").GetComponent<Text>().text = sub_ment;
+                    StartCoroutine(delete_ment());
                 }
-                else if (objectName == "Box")
-                {
-                    main_ment = "상자를 획득했습니다";
-                    sub_ment = "상자에서 이상한 일이?!";
-                    content.transform.Find("B_box").gameObject.SetActive(true);
-                }
-                else if (objectName == "hidden_item")
-                {
-                    main_ment = "숨겨진 물건을 발견했다";
-                    sub_ment = "이건 뭘까? 살퍄보자";
-                    content.transform.Find("B_hid").gameObject.SetActive(true);
-                }
-                canvas.transform.Find("main_ment").gameObject.SetActive(true);
-                canvas.transform.Find("Script").gameObject.SetActive(true);
-                canvas.transform.Find("main_ment").GetComponent<Text>().text = main_ment;
-                canvas.transform.Find("Script").GetComponent<Text>().text = sub_ment;
-                StartCoroutine(delete_ment());
             }
         }
     }
