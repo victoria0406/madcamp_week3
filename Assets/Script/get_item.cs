@@ -32,7 +32,7 @@ public class get_item : MonoBehaviour
         {
             if (EventSystem.current.IsPointerOverGameObject()) //이거 카메라가 달라서 안먹으니까 고쳐
             {
-                //클릭 처리
+                Debug.Log("block");
                 return;
             }
             else { 

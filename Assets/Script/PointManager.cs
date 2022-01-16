@@ -31,15 +31,30 @@ public class PointManager : MonoBehaviour
     {
         if (ARcam != null)
         {
-            float min_dist = 100f;
+            float min_dist = 100;
             int min_thing = 0;
-            foreach(GameObject Obj in Objs)
+
+            float dis_x = 0;
+            float dis_y = 0;
+            float dis_z = 0;
+
+            float fov = ARcam.GetComponent<Camera>().fieldOfView;
+            Debug.Log(fov);
+            dist_text.text = fov.ToString();
+            foreach (GameObject Obj in Objs)
             {
-                   dist = Vector3.Distance(Obj.transform.position, ARcam.transform.position);
+                if (Obj == null)
+                {
+                    
+                }
+                else
+                {
+                    dist = Vector3.Distance(Obj.transform.position, ARcam.transform.position);
+                    
                     if (dist < Range)
                     {
                         Obj.SetActive(true);
-                        print(gameObject.name + "has been reached!");
+                        //print(gameObject.name + "has been reached!");
                     }
                     else if (dist > Range)
                     {
@@ -49,10 +64,11 @@ public class PointManager : MonoBehaviour
                     {
                         min_dist = dist;
                     }
+                }
                 
                 
             }
-            dist_text.text = min_dist.ToString();
+            //dist_text.text = min_dist.ToString();
 
 
         }
