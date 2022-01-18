@@ -35,9 +35,6 @@
 - unity 2020.3.25f(c#)
   * ARfoundation
   * ARcore
-## Tech   
-*이미지 트랙킹
-*유니티 AR 
 
 ## 주요코드 설명
 
