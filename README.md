@@ -123,7 +123,51 @@ public class ARTrackedMultiImageManager : MonoBehaviour
 
 }
   ```
+###  배치
+  + 방탈출 게임 시작지점으로 부터의 상대적 위치를 기반으로 하여 일정 거리에 도달하지 않으면 AR오브젝트가 보이지 않고, 플레이어가 가까이 가야 아이템을 얻을 수 있도록 구현하였습니다.
 
+  ```cs
+
+public class PointManager : MonoBehaviour
+{
+    // Start is called before the first frame update
+    public GameObject ARcam;
+    public GameObject Obj;
+    internal float dist;//AR카메라랑 물체 사이 거리
+    public float Range = 2;
+    private void Awake()
+    {
+        Obj.SetActive(false);
+        if (ARcam == null)
+        {
+            ARcam = GameObject.Find("AR Camera");
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (ARcam != null)
+        {
+            dist = Vector3.Distance(transform.position, ARcam.transform.position);
+            if (dist < Range)
+            {
+                Obj.SetActive(true);
+                print(gameObject.name + "has been reached!");
+            }
+            if (dist > Range)
+            {
+                Obj.SetActive(false);
+            }
+        }
+    }
+    private void OnDrawGizmos()
+    {
+        UnityEditor.Handles.color = Color.green;
+        UnityEditor.Handles.DrawWireDisc(transform.position, transform.up, Range);
+    }
+
+
+  ```
 
 ## Developer
 
