@@ -36,8 +36,8 @@
   * ARfoundation
   * ARcore
 ## Tech   
-이미지 트랙킹
-유니티 AR 
+*이미지 트랙킹
+*유니티 AR 
 
 ## 주요코드 설명
 
